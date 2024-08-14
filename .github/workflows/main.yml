@@ -1,0 +1,29 @@
+name: NPM Audit
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 0 * * *" # This runs the action every night at midnight UTC
+
+jobs:
+  audit:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.16.0' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run NPM Audit
+        run: npm audit
